@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Our Company | Onboarding Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --gold-dim: #8a6e2f;
+    --dark: #0D0D0D;
+    --dark2: #141414;
+    --dark3: #1c1c1c;
+    --dark4: #252525;
+    --white: #F5F0E8;
+    --muted: #888;
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,168,76,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(201,168,76,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 90% 70%, rgba(201,168,76,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-line {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+    margin: 0 auto 40px;
+    animation: growLine 1.2s ease forwards;
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+
+  @keyframes growLine {
+    to { transform: scaleY(1); }
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s ease forwards;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 9vw, 110px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.6s ease forwards;
+  }
+
+  h1 .accent { color: var(--gold); }
+
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-top: 24px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.9s ease forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0;
+    animation: fadeUp 1s 1.4s ease forwards;
+  }
+
+  .scroll-arrow {
+    width: 20px;
+    height: 32px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 6px;
+  }
+
+  .scroll-arrow::after {
+    content: '';
+    width: 4px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 2px;
+    animation: scrollDot 1.5s infinite;
+  }
+
+  @keyframes scrollDot {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(10px); opacity: 0; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION ── */
+  section {
+    padding: 80px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--gold-dim);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 48px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: 0 24px;
+  }
+
+  /* ── DEPARTMENTS GRID ── */
+  .dept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .dept-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .dept-card.visible {
+    animation: cardIn 0.6s ease forwards;
+  }
+
+  @keyframes cardIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .dept-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201,168,76,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,168,76,0.08);
+  }
+
+  .dept-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--card-accent, var(--gold));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .dept-card:hover::before { opacity: 1; }
+
+  .dept-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .dept-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+
+  .dept-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── RESTAURANTS ── */
+  .resto-section { background: var(--dark2); border-radius: 24px; padding: 60px; margin: 0 24px; }
+
+  .resto-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .resto-tag {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12.5px;
+    color: rgba(245,240,232,0.7);
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+
+  .resto-tag:hover {
+    background: rgba(201,168,76,0.12);
+    border-color: rgba(201,168,76,0.4);
+    color: var(--gold-light);
+    transform: translateY(-2px);
+  }
+
+  /* ── TRAINING SPOTLIGHT ── */
+  .training-section {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1508 50%, #0f0f0f 100%);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 24px;
+    padding: 60px;
+    margin: 40px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .training-section::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .training-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .training-icon-wrap {
+    width: 72px; height: 72px;
+    border-radius: 18px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .training-title-group h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .training-title-group p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 540px;
+  }
+
+  .contact-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .contact-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--white);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .contact-pill:hover {
+    background: rgba(201,168,76,0.1);
+    border-color: rgba(201,168,76,0.4);
+    color: var(--gold-light);
+  }
+
+  .contact-pill .icon { font-size: 15px; }
+
+  /* Team */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .team-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    transition: all 0.25s ease;
+  }
+
+  .team-card:hover {
+    background: rgba(201,168,76,0.06);
+    border-color: rgba(201,168,76,0.25);
+    transform: translateY(-3px);
+  }
+
+  .team-avatar {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 0 auto 12px;
+  }
+
+  .team-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--white);
+  }
+
+  .team-email {
+    font-size: 10.5px;
+    color: var(--muted);
+    word-break: break-all;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Responsibilities */
+  .resp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .resp-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 3px solid var(--gold-dim);
+    transition: all 0.25s ease;
+  }
+
+  .resp-card:hover {
+    background: rgba(201,168,76,0.05);
+    border-left-color: var(--gold);
+  }
+
+  .resp-freq {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+
+  .resp-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .resp-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .resp-list li {
+    font-size: 12.5px;
+    color: var(--muted);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .resp-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--gold-dim);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  footer .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .resto-section, .training-section { padding: 36px 24px; }
+    .resto-section, .training-section { margin: 0 12px; }
+    .dept-grid { grid-template-columns: 1fr; }
+    section { padding: 60px 16px; }
+  }
+
+  /* scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="badge">Welcome Onboard</div>
+  <h1>Welcome to<br><span class="accent">Octet</span><br>Solutions.</h1>
+  <p class="hero-sub">Everything you need to know about our departments, restaurant locations, and how we work — all in one place.</p>
+  <div class="scroll-hint">
+    <div class="scroll-arrow"></div>
+    Explore
+  </div>
+</div>
+
+<!-- DEPARTMENTS -->
+<section>
+  <div class="section-label">Company Structure</div>
+  <h2 class="section-title">Our <span style="color:var(--gold)">14 Departments</span></h2>
+
+  <div class="dept-grid">
+
+    <div class="dept-card reveal" style="--card-accent:#e85d75;">
+      <span class="dept-icon">🔴</span>
+      <div class="dept-name">HR Department</div>
+      <p class="dept-desc">Employee relations, onboarding & offboarding, payroll & bonus processing, scheduling, write-ups, promotions, and employee concerns.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#4caf70;">
+      <span class="dept-icon">🟢</span>
+      <div class="dept-name">Administrative Department</div>
+      <p class="dept-desc">Office boys supervision, daily checklists verification, records maintenance, and weekly compliance reviews.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#f5c842;">
+      <span class="dept-icon">🟡</span>
+      <div class="dept-name">Recruitment Department</div>
+      <p class="dept-desc">Job postings, CV shortlisting, interview scheduling, candidate communication, and end-to-end hiring process management.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#e85d5d;">
+      <span class="dept-icon">🔴</span>
+      <div class="dept-name">Finance Department</div>
+      <p class="dept-desc">Daily sales verification, Profit & Loss reports, payroll review, tax compliance, vendor/customer reconciliation, and bonus processing.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#9b6fd4;">
+      <span class="dept-icon">🟣</span>
+      <div class="dept-name">Surveillance Department</div>
+      <p class="dept-desc">Camera-based store monitoring, penalty application, cash handling verification, EOD checks, and customer experience monitoring.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#f07835;">
+      <span class="dept-icon">🟠</span>
+      <div class="dept-name">Projects & Maintenance</div>
+      <p class="dept-desc">Two sub-departments: Heating & Cooling (HVAC, fridges, etc.) and General Maintenance (grease trap, fire system, grill, lights, etc.).</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#C9A84C; border-color:rgba(201,168,76,0.25);">
+      <span class="dept-icon">🔵</span>
+      <div class="dept-name" style="color:var(--gold)">Training Department ★</div>
+      <p class="dept-desc">New employee training, e-learning lesson creation & updates, feedback management, and training report submissions. <strong style="color:var(--gold-light)">Scroll down to learn more.</strong></p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#4caf70;">
+      <span class="dept-icon">🟢</span>
+      <div class="dept-name">Inspection Department</div>
+      <p class="dept-desc">Store audits, negative review handling, food quality checks, and Head Office report follow-ups.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#f5c842;">
+      <span class="dept-icon">🟡</span>
+      <div class="dept-name">Operations Department</div>
+      <p class="dept-desc">Head Office coordination, P&L review, store operational issue resolution, and District Manager meetings.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#e85d5d;">
+      <span class="dept-icon">🔴</span>
+      <div class="dept-name">Marketing Department</div>
+      <p class="dept-desc">Social media, digital ads, graphic design, content writing, video editing, and website management.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#9b6fd4;">
+      <span class="dept-icon">🟣</span>
+      <div class="dept-name">Software Department</div>
+      <p class="dept-desc">Technical support, bug testing and reporting, product research, and e-learning system issue resolution.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#f07835;">
+      <span class="dept-icon">🟠</span>
+      <div class="dept-name">Rental Department</div>
+      <p class="dept-desc">Room and property vacancy tracking, tenant dealing, lease signing, rent follow-up, and property management.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#aaa;">
+      <span class="dept-icon">⚪</span>
+      <div class="dept-name">Compliance Department</div>
+      <p class="dept-desc">Reporting checks across all departments, ticket management, error identification, and reporting to senior management.</p>
+    </div>
+
+    <div class="dept-card reveal" style="--card-accent:#4c9fcf;">
+      <span class="dept-icon">🔵</span>
+      <div class="dept-name">Transvision Immigration</div>
+      <p class="dept-desc">Canadian immigration services — PR, LMIA, work permit application preparation and client guidance.</p>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- RESTAURANTS -->
+<section>
+  <div class="section-label">Canada Locations</div>
+  <h2 class="section-title">Our <span style="color:var(--gold)">Restaurant</span> Locations</h2>
+  <div class="resto-section reveal">
+    <p style="color:var(--muted); font-size:14px; margin-bottom:28px; line-height:1.7;">We operate multiple restaurant locations across Canada. Here are all of our active stores:</p>
+    <div class="resto-grid" id="restoGrid"></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TRAINING SPOTLIGHT -->
+<div class="training-section reveal">
+  <div style="max-width:1100px; margin:0 auto;">
+
+    <div class="section-label" style="margin-bottom:24px;">Department Spotlight</div>
+
+    <div class="training-header">
+      <div class="training-icon-wrap">🎓</div>
+      <div class="training-title-group">
+        <h2>Training Department</h2>
+        <p>Responsible for onboarding new employees, creating and maintaining e-learning lessons, monitoring training progress, and ensuring every team member is equipped with the knowledge to succeed.</p>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="section-label">Department Head</div>
+    <div style="font-family:'Playfair Display',serif; font-size:22px; margin-bottom:16px; color:var(--gold);">Amna Faisal</div>
+    <div class="contact-bar">
+      <a class="contact-pill" href="mailto:amnafaisal569@gmail.com"><span class="icon">✉️</span> amnafaisal569@gmail.com</a>
+      <a class="contact-pill" href="tel:+12892011997"><span class="icon">📞</span> +1 (289) 201-1997</a>
+    </div>
+
+    <!-- Team -->
+    <div class="section-label" style="margin-bottom:20px;">Team Members</div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">M</div>
+        <div class="team-name">Mumtaz</div>
+        <div class="team-email">mumtazahmadma489@gmail.com</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">H</div>
+        <div class="team-name">Hassan</div>
+        <div class="team-email">hassan.training@octetsolutions.io</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">B</div>
+        <div class="team-name">Bareera</div>
+        <div class="team-email">bareera@octetsolutions.io</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">K</div>
+        <div class="team-name">Khushbakht Mumtaz</div>
+        <div class="team-email">khushbakht.training@octetsolutions.io</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">A</div>
+        <div class="team-name">Ali Raza</div>
+        <div class="team-email">aliraza.training@octetsolutions.io</div>
+      </div>
+    </div>
+
+    <!-- Responsibilities -->
+    <div class="section-label" style="margin-bottom:20px;">Key Responsibilities</div>
+    <div class="resp-grid">
+      <div class="resp-card">
+        <div class="resp-freq">Daily</div>
+        <div class="resp-title">Team & Task Supervision</div>
+        <ul class="resp-list">
+          <li>Coordinate team and train new hires</li>
+          <li>Enroll backend hires in e-learning</li>
+          <li>Oversee Modzee lesson updates</li>
+          <li>Monitor new categories & assign them</li>
+          <li>Conduct daily lesson reviews</li>
+        </ul>
+      </div>
+      <div class="resp-card">
+        <div class="resp-freq">Daily</div>
+        <div class="resp-title">Lesson Creation & Checking</div>
+        <ul class="resp-list">
+          <li>Create new training lessons</li>
+          <li>Update lessons based on new data & formats</li>
+          <li>Review each lesson for accuracy</li>
+          <li>Make required changes per instructions</li>
+        </ul>
+      </div>
+      <div class="resp-card">
+        <div class="resp-freq">Daily</div>
+        <div class="resp-title">Feedback & Approval Process</div>
+        <ul class="resp-list">
+          <li>Share lessons for manager review</li>
+          <li>Minimum 50% approval required</li>
+          <li>Submit all feedback via OneVision only</li>
+          <li>Close feedback within 24 hours</li>
+        </ul>
+      </div>
+      <div class="resp-card">
+        <div class="resp-freq">Daily</div>
+        <div class="resp-title">eNews & Policy Updates</div>
+        <ul class="resp-list">
+          <li>Check eNews daily for updates</li>
+          <li>Create lessons as soon as eNews is published</li>
+          <li>Assign lessons based on eNews or policy changes</li>
+          <li>Ensure equal task distribution</li>
+        </ul>
+      </div>
+      <div class="resp-card">
+        <div class="resp-freq">Daily</div>
+        <div class="resp-title">Video Quiz Monitoring</div>
+        <ul class="resp-list">
+          <li>Check quiz completions within 72 hours</li>
+          <li>Reassign failed lessons via ticket</li>
+          <li>Review reassignment requests</li>
+          <li>Add remarks where reassignment is needed</li>
+        </ul>
+      </div>
+      <div class="resp-card">
+        <div class="resp-freq">Daily</div>
+        <div class="resp-title">Reports & Meetings</div>
+        <ul class="resp-list">
+          <li>Maintain training department internal report</li>
+          <li>Review and submit 10-day reports</li>
+          <li>Conduct daily or as-needed team meetings</li>
+          <li>Close tickets daily</li>
+        </ul>
+      </div>
+      <div class="resp-card">
+        <div class="resp-freq">When Required</div>
+        <div class="resp-title">HR Coordination</div>
+        <ul class="resp-list">
+          <li>Trigger HR alerts after 3 failed lessons</li>
+          <li>Maintain employee lesson completion records</li>
+          <li>Escalate delayed data from other departments</li>
+        </ul>
+      </div>
+      <div class="resp-card">
+        <div class="resp-freq">Every 4 Months</div>
+        <div class="resp-title">Lesson Update Follow-up</div>
+        <ul class="resp-list">
+          <li>Follow up with frontend & backend coordinators</li>
+          <li>Revise lessons based on updated data</li>
+          <li>Prioritize updates by urgency level</li>
+        </ul>
+      </div>
+      <div class="resp-card">
+        <div class="resp-freq">Ongoing</div>
+        <div class="resp-title">Promotion Training Cycle</div>
+        <ul class="resp-list">
+          <li>Manage promotion training framework</li>
+          <li>Approve candidate eligibility & track assignment</li>
+          <li>Design lesson plans & training timelines</li>
+          <li>Identify performance gaps & assign retraining</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo-text">Welcome.</span>
+  We're glad you're here — this page was created to help new team members understand our structure and departments.
+  <br><br>
+  For questions, reach out to the Training Department.
+</footer>
+
+<script>
+  // Restaurants
+  const restaurants = [...new Set([
+    "Arthur","Harmony","Surrey West (Night)","Pond (Morning)","Keele","KB (FOH)",
+    "Collingwood","KB (BOH)","Abotsford Drivethru","Bridgeport","College St (Morning)",
+    "Yonge 1 (Morning)","Steeles","Yonge 1 (Night)","Abotsford","Lakehead",
+    "Westminster","Surrey West (Morning)","College St Night","Harmony (Night)",
+    "Queen (Night)","Pond (Night)","Queen (Morning)","RedRiver",
+    "Abbotsford High Street","College St (Night)","Ironwood","New Westminster",
+    "West (Morning)","Osmows Queen (Night)","Osmows College (Night)",
+    "Surrey (Night)","Osmows Pond (Night)","Yonge 1 (Night)","Westminster Night"
+  ])].sort();
+
+  const grid = document.getElementById('restoGrid');
+  restaurants.forEach(r => {
+    const tag = document.createElement('div');
+    tag.className = 'resto-tag';
+    tag.textContent = r;
+    grid.appendChild(tag);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, entry.target.dataset.delay || 0);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Dept cards stagger
+  document.querySelectorAll('.dept-card').forEach((card, i) => {
+    card.dataset.delay = i * 60;
+    observer.observe(card);
+  });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
