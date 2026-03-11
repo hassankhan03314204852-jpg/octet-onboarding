@@ -3,651 +3,826 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to Our Company | Onboarding Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<title>Octet Solutions | Welcome</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --gold: #C9A84C;
-    --gold-light: #F0D080;
-    --gold-dim: #8a6e2f;
-    --dark: #0D0D0D;
-    --dark2: #141414;
-    --dark3: #1c1c1c;
-    --dark4: #252525;
-    --white: #F5F0E8;
-    --muted: #888;
-    --radius: 16px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--dark);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-    cursor: default;
-  }
-
-  /* ── NOISE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 80px 24px 60px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,168,76,0.18) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(201,168,76,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 90% 70%, rgba(201,168,76,0.07) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .hero-line {
-    width: 1px;
-    height: 80px;
-    background: linear-gradient(to bottom, transparent, var(--gold));
-    margin: 0 auto 40px;
-    animation: growLine 1.2s ease forwards;
-    transform-origin: top;
-    transform: scaleY(0);
-  }
-
-  @keyframes growLine {
-    to { transform: scaleY(1); }
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid rgba(201,168,76,0.35);
-    border-radius: 100px;
-    padding: 6px 18px;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-family: 'JetBrains Mono', monospace;
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s ease forwards;
-  }
-
-  .badge::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--gold);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
-  }
-
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(44px, 9vw, 110px);
-    font-weight: 900;
-    line-height: 0.9;
-    letter-spacing: -0.02em;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.6s ease forwards;
-  }
-
-  h1 .accent { color: var(--gold); }
-
-  .hero-sub {
-    font-size: clamp(15px, 2vw, 18px);
-    color: var(--muted);
-    max-width: 560px;
-    line-height: 1.7;
-    margin-top: 24px;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.9s ease forwards;
-  }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-family: 'JetBrains Mono', monospace;
-    opacity: 0;
-    animation: fadeUp 1s 1.4s ease forwards;
-  }
-
-  .scroll-arrow {
-    width: 20px;
-    height: 32px;
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 20px;
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 6px;
-  }
-
-  .scroll-arrow::after {
-    content: '';
-    width: 4px;
-    height: 8px;
-    background: var(--gold);
-    border-radius: 2px;
-    animation: scrollDot 1.5s infinite;
-  }
-
-  @keyframes scrollDot {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(10px); opacity: 0; }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(28px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── SECTION ── */
-  section {
-    padding: 80px 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    max-width: 60px;
-    height: 1px;
-    background: var(--gold-dim);
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 5vw, 52px);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 48px;
-  }
-
-  /* ── DIVIDER ── */
-  .divider {
-    border: none;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    margin: 0 24px;
-  }
-
-  /* ── DEPARTMENTS GRID ── */
-  .dept-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-  }
-
-  .dept-card {
-    background: var(--dark2);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: var(--radius);
-    padding: 28px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    cursor: default;
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .dept-card.visible {
-    animation: cardIn 0.6s ease forwards;
-  }
-
-  @keyframes cardIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .dept-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(201,168,76,0.3);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,168,76,0.08);
-  }
-
-  .dept-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--card-accent, var(--gold));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .dept-card:hover::before { opacity: 1; }
-
-  .dept-icon {
-    font-size: 28px;
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .dept-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--white);
-  }
-
-  .dept-desc {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.65;
-  }
-
-  /* ── RESTAURANTS ── */
-  .resto-section { background: var(--dark2); border-radius: 24px; padding: 60px; margin: 0 24px; }
-
-  .resto-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .resto-tag {
-    background: var(--dark3);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 12.5px;
-    color: rgba(245,240,232,0.7);
-    transition: all 0.25s ease;
-    white-space: nowrap;
-  }
-
-  .resto-tag:hover {
-    background: rgba(201,168,76,0.12);
-    border-color: rgba(201,168,76,0.4);
-    color: var(--gold-light);
-    transform: translateY(-2px);
-  }
-
-  /* ── TRAINING SPOTLIGHT ── */
-  .training-section {
-    background: linear-gradient(135deg, #0f0f0f 0%, #1a1508 50%, #0f0f0f 100%);
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 24px;
-    padding: 60px;
-    margin: 40px 24px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .training-section::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .training-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-  }
-
-  .training-icon-wrap {
-    width: 72px; height: 72px;
-    border-radius: 18px;
-    background: rgba(201,168,76,0.1);
-    border: 1px solid rgba(201,168,76,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 32px;
-    flex-shrink: 0;
-  }
-
-  .training-title-group h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(26px, 4vw, 40px);
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .training-title-group p {
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.6;
-    max-width: 540px;
-  }
-
-  .contact-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 40px;
-  }
-
-  .contact-pill {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 100px;
-    padding: 8px 16px;
-    font-size: 13px;
-    color: var(--white);
-    text-decoration: none;
-    transition: all 0.25s ease;
-  }
-
-  .contact-pill:hover {
-    background: rgba(201,168,76,0.1);
-    border-color: rgba(201,168,76,0.4);
-    color: var(--gold-light);
-  }
-
-  .contact-pill .icon { font-size: 15px; }
-
-  /* Team */
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 12px;
-    margin-bottom: 40px;
-  }
-
-  .team-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px;
-    padding: 20px 16px;
-    text-align: center;
-    transition: all 0.25s ease;
-  }
-
-  .team-card:hover {
-    background: rgba(201,168,76,0.06);
-    border-color: rgba(201,168,76,0.25);
-    transform: translateY(-3px);
-  }
-
-  .team-avatar {
-    width: 48px; height: 48px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
-    border: 1px solid rgba(201,168,76,0.2);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--gold);
-    margin: 0 auto 12px;
-  }
-
-  .team-name {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: var(--white);
-  }
-
-  .team-email {
-    font-size: 10.5px;
-    color: var(--muted);
-    word-break: break-all;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  /* Responsibilities */
-  .resp-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-
-  .resp-card {
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px;
-    padding: 20px;
-    border-left: 3px solid var(--gold-dim);
-    transition: all 0.25s ease;
-  }
-
-  .resp-card:hover {
-    background: rgba(201,168,76,0.05);
-    border-left-color: var(--gold);
-  }
-
-  .resp-freq {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold-dim);
-    margin-bottom: 8px;
-  }
-
-  .resp-title {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--white);
-  }
-
-  .resp-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .resp-list li {
-    font-size: 12.5px;
-    color: var(--muted);
-    padding-left: 14px;
-    position: relative;
-    line-height: 1.5;
-  }
-
-  .resp-list li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    color: var(--gold-dim);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    text-align: center;
-    padding: 60px 24px;
-    color: var(--muted);
-    font-size: 12px;
-    border-top: 1px solid rgba(255,255,255,0.04);
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  footer .logo-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    color: var(--gold);
-    display: block;
-    margin-bottom: 12px;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .resto-section, .training-section { padding: 36px 24px; }
-    .resto-section, .training-section { margin: 0 12px; }
-    .dept-grid { grid-template-columns: 1fr; }
-    section { padding: 60px 16px; }
-  }
-
-  /* scroll reveal */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+:root {
+  --ink: #0a0e1a;
+  --ink2: #111827;
+  --ink3: #1a2236;
+  --ink4: #222d42;
+  --teal: #00d4aa;
+  --teal-dim: #007a63;
+  --teal-glow: rgba(0,212,170,0.15);
+  --coral: #ff6b6b;
+  --amber: #ffb347;
+  --sky: #64b5f6;
+  --text: #e8edf5;
+  --muted: #6b7a99;
+  --soft: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.07);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--ink);
+  color:var(--text);
+  font-family:'Outfit',sans-serif;
+  overflow-x:hidden;
+}
+
+/* ANIMATED BG GRID */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:100px 24px 80px;
+  position:relative;overflow:hidden;
+  z-index:1;
+}
+
+.hero-glow{
+  position:absolute;
+  top:-20%;left:50%;transform:translateX(-50%);
+  width:800px;height:600px;
+  background:radial-gradient(ellipse, rgba(0,212,170,0.12) 0%, transparent 65%);
+  pointer-events:none;
+  animation:breathe 6s ease-in-out infinite;
+}
+
+.hero-glow2{
+  position:absolute;
+  bottom:-10%;left:10%;
+  width:400px;height:400px;
+  background:radial-gradient(ellipse, rgba(255,107,107,0.07) 0%, transparent 65%);
+  pointer-events:none;
+  animation:breathe 8s 2s ease-in-out infinite;
+}
+
+@keyframes breathe{
+  0%,100%{transform:translateX(-50%) scale(1);}
+  50%{transform:translateX(-50%) scale(1.15);}
+}
+
+.floating-dots{
+  position:absolute;inset:0;pointer-events:none;overflow:hidden;
+}
+
+.dot{
+  position:absolute;
+  width:3px;height:3px;
+  background:var(--teal);
+  border-radius:50%;
+  opacity:0;
+  animation:floatUp var(--dur) var(--delay) ease-in infinite;
+}
+
+@keyframes floatUp{
+  0%{opacity:0;transform:translateY(0) scale(0);}
+  10%{opacity:0.6;}
+  90%{opacity:0.2;}
+  100%{opacity:0;transform:translateY(-100vh) scale(0.5);}
+}
+
+.octet-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(0,212,170,0.08);
+  border:1px solid rgba(0,212,170,0.25);
+  border-radius:100px;
+  padding:8px 22px;
+  font-family:'Fira Code',monospace;
+  font-size:11px;letter-spacing:0.2em;
+  color:var(--teal);
+  margin-bottom:36px;
+  opacity:0;animation:slideIn 0.8s 0.3s ease forwards;
+}
+
+.octet-tag::before{
+  content:'';width:8px;height:8px;border-radius:50%;
+  background:var(--teal);
+  box-shadow:0 0 8px var(--teal);
+  animation:blink 1.5s infinite;
+}
+
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(52px,10vw,130px);
+  font-weight:700;
+  line-height:0.88;
+  letter-spacing:-0.03em;
+  opacity:0;animation:slideIn 1s 0.5s ease forwards;
+}
+
+h1 .line1{display:block;color:var(--text);}
+h1 .line2{
+  display:block;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--sky) 50%,var(--teal) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  background-size:200% auto;
+  animation:shimmer 3s linear infinite, slideIn 1s 0.5s ease forwards;
+}
+
+@keyframes shimmer{to{background-position:200% center;}}
+
+h1 .line3{display:block;color:rgba(232,237,245,0.5);}
+
+.hero-desc{
+  font-size:clamp(14px,2vw,17px);
+  color:var(--muted);
+  max-width:520px;line-height:1.8;
+  margin-top:28px;
+  opacity:0;animation:slideIn 1s 0.8s ease forwards;
+}
+
+.hero-cta{
+  display:flex;gap:16px;flex-wrap:wrap;justify-content:center;
+  margin-top:40px;
+  opacity:0;animation:slideIn 1s 1.1s ease forwards;
+}
+
+.btn-primary{
+  display:flex;align-items:center;gap:8px;
+  background:var(--teal);color:var(--ink);
+  border:none;border-radius:12px;
+  padding:14px 28px;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  text-decoration:none;
+}
+
+.btn-primary:hover{
+  background:#00f0c0;
+  box-shadow:0 0 30px rgba(0,212,170,0.4);
+  transform:translateY(-2px);
+}
+
+.btn-ghost{
+  display:flex;align-items:center;gap:8px;
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 28px;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;
+  color:var(--text);cursor:pointer;
+  transition:all 0.3s ease;
+  text-decoration:none;
+}
+
+.btn-ghost:hover{
+  border-color:rgba(0,212,170,0.4);
+  background:rgba(0,212,170,0.05);
+}
+
+.scroll-line{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  opacity:0;animation:slideIn 1s 1.6s ease forwards;
+}
+
+.scroll-line span{
+  font-family:'Fira Code',monospace;font-size:10px;
+  letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;
+}
+
+.scroll-track{
+  width:1px;height:50px;
+  background:linear-gradient(to bottom,var(--teal),transparent);
+  position:relative;overflow:hidden;
+}
+
+.scroll-track::after{
+  content:'';position:absolute;
+  width:3px;height:20px;left:-1px;top:-20px;
+  background:var(--teal);border-radius:2px;
+  animation:scrollDown 2s ease-in-out infinite;
+}
+
+@keyframes scrollDown{
+  0%{top:-20px;opacity:0;}
+  30%{opacity:1;}
+  100%{top:60px;opacity:0;}
+}
+
+@keyframes slideIn{
+  from{opacity:0;transform:translateY(32px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ── STATS BAR ── */
+.stats-bar{
+  background:var(--ink2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:28px 40px;
+  display:flex;justify-content:center;flex-wrap:wrap;gap:0;
+  position:relative;z-index:1;
+}
+
+.stat-item{
+  padding:0 48px;
+  border-right:1px solid var(--border);
+  text-align:center;
+}
+
+.stat-item:last-child{border-right:none;}
+
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;font-weight:700;
+  color:var(--teal);line-height:1;
+  display:block;
+}
+
+.stat-label{
+  font-size:11px;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--muted);
+  font-family:'Fira Code',monospace;
+  margin-top:6px;display:block;
+}
+
+/* ── SECTION ── */
+.section{
+  padding:100px 40px;
+  max-width:1280px;margin:0 auto;
+  position:relative;z-index:1;
+}
+
+.sec-eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-family:'Fira Code',monospace;
+  font-size:11px;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--teal);
+  margin-bottom:18px;
+}
+
+.sec-eyebrow::before{
+  content:'';width:32px;height:1px;background:var(--teal);
+}
+
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,5vw,58px);font-weight:700;
+  line-height:1.05;margin-bottom:56px;
+}
+
+.sec-title em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--teal),var(--sky));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+/* ── DEPT GRID ── */
+.dept-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:14px;
+}
+
+.dept-card{
+  background:var(--ink2);
+  border:1px solid var(--border);
+  border-radius:20px;padding:30px;
+  position:relative;overflow:hidden;
+  transition:all 0.35s ease;
+  cursor:default;
+  opacity:0;transform:translateY(24px);
+}
+
+.dept-card.vis{
+  opacity:1;transform:translateY(0);
+  transition:opacity 0.6s ease, transform 0.6s ease;
+}
+
+.dept-card::after{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(0,212,170,0.06) 0%, transparent 60%);
+  opacity:0;transition:opacity 0.3s ease;
+  pointer-events:none;
+}
+
+.dept-card:hover::after{opacity:1;}
+
+.dept-card:hover{
+  border-color:rgba(0,212,170,0.25);
+  transform:translateY(-5px);
+  box-shadow:0 24px 48px rgba(0,0,0,0.4);
+}
+
+.card-top{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:18px;
+}
+
+.card-emoji{font-size:26px;line-height:1;}
+
+.card-badge{
+  font-family:'Fira Code',monospace;
+  font-size:9px;letter-spacing:0.18em;text-transform:uppercase;
+  padding:4px 10px;border-radius:100px;
+  background:var(--badge-bg,rgba(100,181,246,0.1));
+  color:var(--badge-color,var(--sky));
+  border:1px solid var(--badge-border,rgba(100,181,246,0.2));
+}
+
+.card-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:700;
+  margin-bottom:10px;color:var(--text);
+  line-height:1.1;
+}
+
+.card-desc{
+  font-size:13.5px;color:var(--muted);line-height:1.7;
+}
+
+.card-star{
+  position:absolute;top:20px;right:20px;
+  background:linear-gradient(135deg,var(--teal),var(--sky));
+  color:var(--ink);font-size:10px;font-weight:700;
+  padding:4px 10px;border-radius:100px;
+  font-family:'Fira Code',monospace;letter-spacing:0.1em;
+}
+
+/* ── DIVIDER ── */
+.divider{
+  border:none;
+  border-top:1px solid var(--border);
+  margin:0 40px;
+  position:relative;z-index:1;
+}
+
+/* ── RESTAURANTS ── */
+.resto-wrap{
+  background:var(--ink2);
+  border:1px solid var(--border);
+  border-radius:24px;padding:56px;
+  position:relative;overflow:hidden;
+}
+
+.resto-wrap::before{
+  content:'';position:absolute;
+  top:-80px;right:-80px;
+  width:350px;height:350px;
+  background:radial-gradient(circle,rgba(255,179,71,0.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+.resto-intro{
+  display:flex;align-items:center;gap:20px;
+  margin-bottom:32px;flex-wrap:wrap;
+}
+
+.resto-count{
+  font-family:'Cormorant Garamond',serif;
+  font-size:56px;font-weight:700;color:var(--amber);line-height:1;
+}
+
+.resto-count-label{
+  font-size:13px;color:var(--muted);line-height:1.6;max-width:220px;
+}
+
+.resto-grid{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+
+.resto-chip{
+  background:var(--ink3);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:7px 14px;
+  font-size:12.5px;
+  color:rgba(232,237,245,0.65);
+  transition:all 0.2s ease;
+  white-space:nowrap;
+  cursor:default;
+}
+
+.resto-chip:hover{
+  background:rgba(255,179,71,0.1);
+  border-color:rgba(255,179,71,0.35);
+  color:var(--amber);
+  transform:translateY(-2px);
+}
+
+/* ── TRAINING HERO ── */
+.training-hero{
+  background:var(--ink2);
+  border:1px solid rgba(0,212,170,0.2);
+  border-radius:28px;
+  padding:72px;
+  margin:40px 40px;
+  position:relative;overflow:hidden;
+}
+
+.training-hero::before{
+  content:'TRAINING';
+  position:absolute;top:-20px;right:-10px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:160px;font-weight:700;
+  color:rgba(0,212,170,0.03);
+  line-height:1;white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+}
+
+.training-hero::after{
+  content:'';position:absolute;
+  bottom:-100px;left:-100px;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(0,212,170,0.08) 0%,transparent 65%);
+  pointer-events:none;
+}
+
+.t-top{
+  display:grid;grid-template-columns:auto 1fr;gap:40px;
+  align-items:start;margin-bottom:56px;
+}
+
+.t-icon{
+  width:80px;height:80px;border-radius:22px;
+  background:linear-gradient(135deg,rgba(0,212,170,0.15),rgba(0,212,170,0.03));
+  border:1px solid rgba(0,212,170,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;flex-shrink:0;
+  box-shadow:0 0 40px rgba(0,212,170,0.1);
+}
+
+.t-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,4vw,52px);font-weight:700;
+  margin-bottom:12px;line-height:1.05;
+}
+
+.t-subtitle{
+  font-size:15px;color:var(--muted);line-height:1.75;max-width:560px;
+}
+
+/* Contact */
+.contact-row{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-bottom:52px;
+}
+
+.c-pill{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:14px;padding:12px 20px;
+  font-size:13px;color:var(--text);
+  text-decoration:none;
+  transition:all 0.25s ease;
+}
+
+.c-pill:hover{
+  background:rgba(0,212,170,0.08);
+  border-color:rgba(0,212,170,0.35);
+  color:var(--teal);
+  transform:translateY(-2px);
+}
+
+.c-pill .ci{font-size:16px;}
+
+.head-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:700;color:var(--teal);
+  margin-bottom:20px;
+}
+
+/* Team */
+.team-row{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:12px;margin-bottom:56px;
+}
+
+.tm-card{
+  background:rgba(255,255,255,0.025);
+  border:1px solid var(--border);
+  border-radius:16px;padding:22px 18px;
+  text-align:center;transition:all 0.25s ease;
+}
+
+.tm-card:hover{
+  background:rgba(0,212,170,0.05);
+  border-color:rgba(0,212,170,0.2);
+  transform:translateY(-4px);
+  box-shadow:0 16px 40px rgba(0,0,0,0.3);
+}
+
+.tm-av{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:700;
+  margin:0 auto 14px;
+}
+
+.tm-name{font-size:14px;font-weight:600;margin-bottom:5px;}
+.tm-email{font-size:10px;color:var(--muted);word-break:break-all;font-family:'Fira Code',monospace;}
+
+/* Responsibilities */
+.resp-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:14px;
+}
+
+.resp-card{
+  background:rgba(255,255,255,0.02);
+  border:1px solid var(--border);
+  border-radius:16px;padding:24px;
+  border-top:2px solid var(--rc-color,var(--teal-dim));
+  transition:all 0.25s ease;
+}
+
+.resp-card:hover{
+  background:rgba(0,212,170,0.04);
+  border-top-color:var(--teal);
+  transform:translateY(-3px);
+}
+
+.resp-tag{
+  display:inline-block;
+  font-family:'Fira Code',monospace;
+  font-size:9px;letter-spacing:0.18em;text-transform:uppercase;
+  padding:3px 10px;border-radius:100px;
+  background:rgba(0,212,170,0.08);
+  color:var(--teal);
+  border:1px solid rgba(0,212,170,0.15);
+  margin-bottom:12px;
+}
+
+.resp-tag.daily{background:rgba(100,181,246,0.08);color:var(--sky);border-color:rgba(100,181,246,0.15);}
+.resp-tag.when{background:rgba(255,179,71,0.08);color:var(--amber);border-color:rgba(255,179,71,0.15);}
+.resp-tag.months{background:rgba(255,107,107,0.08);color:var(--coral);border-color:rgba(255,107,107,0.15);}
+.resp-tag.ongoing{background:rgba(0,212,170,0.08);color:var(--teal);border-color:rgba(0,212,170,0.15);}
+
+.resp-title{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text);}
+
+.resp-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.resp-list li{
+  font-size:12.5px;color:var(--muted);
+  padding-left:16px;position:relative;line-height:1.55;
+}
+.resp-list li::before{
+  content:'→';position:absolute;left:0;
+  color:var(--teal-dim);font-size:11px;
+}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;padding:72px 40px;
+  border-top:1px solid var(--border);
+  position:relative;z-index:1;
+}
+
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px;font-weight:700;
+  background:linear-gradient(135deg,var(--teal),var(--sky));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;display:block;margin-bottom:16px;
+}
+
+.footer-sub{
+  font-size:13px;color:var(--muted);line-height:1.8;
+  font-family:'Fira Code',monospace;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .t-top{grid-template-columns:1fr;}
+  .training-hero{padding:40px 28px;margin:20px 12px;}
+  .resto-wrap{padding:36px 24px;}
+  .section{padding:72px 20px;}
+  .stats-bar{gap:24px;}
+  .stat-item{border:none;padding:0 20px;}
+  .divider{margin:0 12px;}
+}
+
+@media(max-width:600px){
+  .dept-grid{grid-template-columns:1fr;}
+  .team-row{grid-template-columns:repeat(2,1fr);}
+}
+
+/* Scroll reveal */
+.rev{
+  opacity:0;transform:translateY(36px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.rev.vis{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
+<!-- FLOATING DOTS -->
+<div class="floating-dots" id="dots"></div>
+
+<!-- ── HERO ── -->
 <div class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-line"></div>
-  <div class="badge">Welcome Onboard</div>
-  <h1>Welcome to<br><span class="accent">Octet</span><br>Solutions.</h1>
-  <p class="hero-sub">Everything you need to know about our departments, restaurant locations, and how we work — all in one place.</p>
-  <div class="scroll-hint">
-    <div class="scroll-arrow"></div>
-    Explore
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="octet-tag">octet solutions · onboarding hub</div>
+
+  <h1>
+    <span class="line1">Welcome to</span>
+    <span class="line2">Octet</span>
+    <span class="line3">Solutions.</span>
+  </h1>
+
+  <p class="hero-desc">Your complete guide to our departments, teams, and restaurant locations — everything a new team member needs to get started.</p>
+
+  <div class="hero-cta">
+    <a href="#departments" class="btn-primary">
+      <span>Explore Departments</span>
+      <span>↓</span>
+    </a>
+    <a href="#training" class="btn-ghost">
+      <span>Training Info</span>
+      <span>→</span>
+    </a>
+  </div>
+
+  <div class="scroll-line">
+    <div class="scroll-track"></div>
+    <span>Scroll to explore</span>
   </div>
 </div>
 
-<!-- DEPARTMENTS -->
-<section>
-  <div class="section-label">Company Structure</div>
-  <h2 class="section-title">Our <span style="color:var(--gold)">14 Departments</span></h2>
+<!-- ── STATS BAR ── -->
+<div class="stats-bar rev">
+  <div class="stat-item">
+    <span class="stat-num">14</span>
+    <span class="stat-label">Departments</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">35+</span>
+    <span class="stat-label">Restaurants</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">🇨🇦</span>
+    <span class="stat-label">Canada</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">1</span>
+    <span class="stat-label">Team</span>
+  </div>
+</div>
+
+<!-- ── DEPARTMENTS ── -->
+<section class="section" id="departments">
+  <div class="sec-eyebrow">Company Structure</div>
+  <h2 class="sec-title">Our <em>14 Departments</em></h2>
 
   <div class="dept-grid">
 
-    <div class="dept-card reveal" style="--card-accent:#e85d75;">
-      <span class="dept-icon">🔴</span>
-      <div class="dept-name">HR Department</div>
-      <p class="dept-desc">Employee relations, onboarding & offboarding, payroll & bonus processing, scheduling, write-ups, promotions, and employee concerns.</p>
+    <div class="dept-card" style="--card-accent:#ff6b6b;">
+      <div class="card-top">
+        <span class="card-emoji">🔴</span>
+        <span class="card-badge" style="--badge-bg:rgba(255,107,107,0.1);--badge-color:#ff6b6b;--badge-border:rgba(255,107,107,0.2);">People</span>
+      </div>
+      <div class="card-name">HR Department</div>
+      <p class="card-desc">Employee relations, onboarding & offboarding, payroll & bonus processing, scheduling, write-ups, promotions, and employee concerns.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#4caf70;">
-      <span class="dept-icon">🟢</span>
-      <div class="dept-name">Administrative Department</div>
-      <p class="dept-desc">Office boys supervision, daily checklists verification, records maintenance, and weekly compliance reviews.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🟢</span>
+        <span class="card-badge">Operations</span>
+      </div>
+      <div class="card-name">Administrative Department</div>
+      <p class="card-desc">Office boys supervision, daily checklists verification, records maintenance, and weekly compliance reviews.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#f5c842;">
-      <span class="dept-icon">🟡</span>
-      <div class="dept-name">Recruitment Department</div>
-      <p class="dept-desc">Job postings, CV shortlisting, interview scheduling, candidate communication, and end-to-end hiring process management.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🟡</span>
+        <span class="card-badge" style="--badge-bg:rgba(255,179,71,0.1);--badge-color:#ffb347;--badge-border:rgba(255,179,71,0.2);">Talent</span>
+      </div>
+      <div class="card-name">Recruitment Department</div>
+      <p class="card-desc">Job postings, CV shortlisting, interview scheduling, candidate communication, and end-to-end hiring process management.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#e85d5d;">
-      <span class="dept-icon">🔴</span>
-      <div class="dept-name">Finance Department</div>
-      <p class="dept-desc">Daily sales verification, Profit & Loss reports, payroll review, tax compliance, vendor/customer reconciliation, and bonus processing.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🔴</span>
+        <span class="card-badge" style="--badge-bg:rgba(255,107,107,0.1);--badge-color:#ff6b6b;--badge-border:rgba(255,107,107,0.2);">Finance</span>
+      </div>
+      <div class="card-name">Finance Department</div>
+      <p class="card-desc">Daily sales verification, Profit & Loss reports, payroll review, tax compliance, vendor/customer reconciliation, and bonus processing.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#9b6fd4;">
-      <span class="dept-icon">🟣</span>
-      <div class="dept-name">Surveillance Department</div>
-      <p class="dept-desc">Camera-based store monitoring, penalty application, cash handling verification, EOD checks, and customer experience monitoring.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🟣</span>
+        <span class="card-badge" style="--badge-bg:rgba(179,136,255,0.1);--badge-color:#b388ff;--badge-border:rgba(179,136,255,0.2);">Security</span>
+      </div>
+      <div class="card-name">Surveillance Department</div>
+      <p class="card-desc">Camera-based store monitoring, penalty application, cash handling verification, EOD checks, and customer experience monitoring.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#f07835;">
-      <span class="dept-icon">🟠</span>
-      <div class="dept-name">Projects & Maintenance</div>
-      <p class="dept-desc">Two sub-departments: Heating & Cooling (HVAC, fridges, etc.) and General Maintenance (grease trap, fire system, grill, lights, etc.).</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🟠</span>
+        <span class="card-badge" style="--badge-bg:rgba(255,179,71,0.1);--badge-color:#ffb347;--badge-border:rgba(255,179,71,0.2);">Infra</span>
+      </div>
+      <div class="card-name">Projects & Maintenance</div>
+      <p class="card-desc">Two sub-departments: Heating & Cooling (HVAC, fridges, etc.) and General Maintenance (grease trap, fire system, grill, lights, etc.).</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#C9A84C; border-color:rgba(201,168,76,0.25);">
-      <span class="dept-icon">🔵</span>
-      <div class="dept-name" style="color:var(--gold)">Training Department ★</div>
-      <p class="dept-desc">New employee training, e-learning lesson creation & updates, feedback management, and training report submissions. <strong style="color:var(--gold-light)">Scroll down to learn more.</strong></p>
+    <div class="dept-card" style="border-color:rgba(0,212,170,0.3);">
+      <div class="card-top">
+        <span class="card-emoji">🎓</span>
+        <span class="card-badge" style="--badge-bg:rgba(0,212,170,0.12);--badge-color:#00d4aa;--badge-border:rgba(0,212,170,0.25);">Learning</span>
+      </div>
+      <div class="card-star">★ Featured</div>
+      <div class="card-name" style="color:var(--teal)">Training Department</div>
+      <p class="card-desc">New employee training, e-learning lesson creation & updates, feedback management, and training report submissions. <strong style="color:rgba(0,212,170,0.8)">See full details below →</strong></p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#4caf70;">
-      <span class="dept-icon">🟢</span>
-      <div class="dept-name">Inspection Department</div>
-      <p class="dept-desc">Store audits, negative review handling, food quality checks, and Head Office report follow-ups.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🟢</span>
+        <span class="card-badge">Quality</span>
+      </div>
+      <div class="card-name">Inspection Department</div>
+      <p class="card-desc">Store audits, negative review handling, food quality checks, and Head Office report follow-ups.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#f5c842;">
-      <span class="dept-icon">🟡</span>
-      <div class="dept-name">Operations Department</div>
-      <p class="dept-desc">Head Office coordination, P&L review, store operational issue resolution, and District Manager meetings.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🟡</span>
+        <span class="card-badge" style="--badge-bg:rgba(255,179,71,0.1);--badge-color:#ffb347;--badge-border:rgba(255,179,71,0.2);">Ops</span>
+      </div>
+      <div class="card-name">Operations Department</div>
+      <p class="card-desc">Head Office coordination, P&L review, store operational issue resolution, and District Manager meetings.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#e85d5d;">
-      <span class="dept-icon">🔴</span>
-      <div class="dept-name">Marketing Department</div>
-      <p class="dept-desc">Social media, digital ads, graphic design, content writing, video editing, and website management.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🔴</span>
+        <span class="card-badge" style="--badge-bg:rgba(255,107,107,0.1);--badge-color:#ff6b6b;--badge-border:rgba(255,107,107,0.2);">Brand</span>
+      </div>
+      <div class="card-name">Marketing Department</div>
+      <p class="card-desc">Social media, digital ads, graphic design, content writing, video editing, and website management.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#9b6fd4;">
-      <span class="dept-icon">🟣</span>
-      <div class="dept-name">Software Department</div>
-      <p class="dept-desc">Technical support, bug testing and reporting, product research, and e-learning system issue resolution.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🟣</span>
+        <span class="card-badge" style="--badge-bg:rgba(179,136,255,0.1);--badge-color:#b388ff;--badge-border:rgba(179,136,255,0.2);">Tech</span>
+      </div>
+      <div class="card-name">Software Department</div>
+      <p class="card-desc">Technical support, bug testing and reporting, product research, and e-learning system issue resolution.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#f07835;">
-      <span class="dept-icon">🟠</span>
-      <div class="dept-name">Rental Department</div>
-      <p class="dept-desc">Room and property vacancy tracking, tenant dealing, lease signing, rent follow-up, and property management.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🟠</span>
+        <span class="card-badge" style="--badge-bg:rgba(255,179,71,0.1);--badge-color:#ffb347;--badge-border:rgba(255,179,71,0.2);">Property</span>
+      </div>
+      <div class="card-name">Rental Department</div>
+      <p class="card-desc">Room and property vacancy tracking, tenant dealing, lease signing, rent follow-up, and property management.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#aaa;">
-      <span class="dept-icon">⚪</span>
-      <div class="dept-name">Compliance Department</div>
-      <p class="dept-desc">Reporting checks across all departments, ticket management, error identification, and reporting to senior management.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">⚪</span>
+        <span class="card-badge" style="--badge-bg:rgba(255,255,255,0.05);--badge-color:#aaa;--badge-border:rgba(255,255,255,0.1);">Audit</span>
+      </div>
+      <div class="card-name">Compliance Department</div>
+      <p class="card-desc">Reporting checks across all departments, ticket management, error identification, and reporting to senior management.</p>
     </div>
 
-    <div class="dept-card reveal" style="--card-accent:#4c9fcf;">
-      <span class="dept-icon">🔵</span>
-      <div class="dept-name">Transvision Immigration</div>
-      <p class="dept-desc">Canadian immigration services — PR, LMIA, work permit application preparation and client guidance.</p>
+    <div class="dept-card">
+      <div class="card-top">
+        <span class="card-emoji">🍁</span>
+        <span class="card-badge">Immigration</span>
+      </div>
+      <div class="card-name">Transvision Immigration</div>
+      <p class="card-desc">Canadian immigration services — PR, LMIA, work permit application preparation and client guidance.</p>
     </div>
 
   </div>
@@ -655,215 +830,223 @@
 
 <hr class="divider">
 
-<!-- RESTAURANTS -->
-<section>
-  <div class="section-label">Canada Locations</div>
-  <h2 class="section-title">Our <span style="color:var(--gold)">Restaurant</span> Locations</h2>
-  <div class="resto-section reveal">
-    <p style="color:var(--muted); font-size:14px; margin-bottom:28px; line-height:1.7;">We operate multiple restaurant locations across Canada. Here are all of our active stores:</p>
+<!-- ── RESTAURANTS ── -->
+<section class="section">
+  <div class="sec-eyebrow">Canada Locations</div>
+  <h2 class="sec-title">Our <em>Restaurant</em> Network</h2>
+  <div class="resto-wrap rev">
+    <div class="resto-intro">
+      <div class="resto-count" id="restoNum">35+</div>
+      <div class="resto-count-label">Active restaurant locations across Canada</div>
+    </div>
     <div class="resto-grid" id="restoGrid"></div>
   </div>
 </section>
 
 <hr class="divider">
 
-<!-- TRAINING SPOTLIGHT -->
-<div class="training-section reveal">
-  <div style="max-width:1100px; margin:0 auto;">
-
-    <div class="section-label" style="margin-bottom:24px;">Department Spotlight</div>
-
-    <div class="training-header">
-      <div class="training-icon-wrap">🎓</div>
-      <div class="training-title-group">
-        <h2>Training Department</h2>
-        <p>Responsible for onboarding new employees, creating and maintaining e-learning lessons, monitoring training progress, and ensuring every team member is equipped with the knowledge to succeed.</p>
-      </div>
+<!-- ── TRAINING SPOTLIGHT ── -->
+<div class="training-hero rev" id="training">
+  <div class="t-top">
+    <div class="t-icon">🎓</div>
+    <div>
+      <div class="t-title">Training Department</div>
+      <p class="t-subtitle">The backbone of employee success at Octet Solutions. Responsible for onboarding, e-learning, lesson management, and making sure every team member has the knowledge to excel.</p>
     </div>
+  </div>
 
-    <!-- Contact -->
-    <div class="section-label">Department Head</div>
-    <div style="font-family:'Playfair Display',serif; font-size:22px; margin-bottom:16px; color:var(--gold);">Amna Faisal</div>
-    <div class="contact-bar">
-      <a class="contact-pill" href="mailto:amnafaisal569@gmail.com"><span class="icon">✉️</span> amnafaisal569@gmail.com</a>
-      <a class="contact-pill" href="tel:+12892011997"><span class="icon">📞</span> +1 (289) 201-1997</a>
+  <!-- Head -->
+  <div class="sec-eyebrow" style="margin-bottom:12px;">Department Head</div>
+  <div class="head-name">Amna Faisal</div>
+  <div class="contact-row">
+    <a class="c-pill" href="mailto:amnafaisal569@gmail.com"><span class="ci">✉️</span> amnafaisal569@gmail.com</a>
+    <a class="c-pill" href="tel:+12892011997"><span class="ci">📞</span> +1 (289) 201-1997</a>
+  </div>
+
+  <!-- Team -->
+  <div class="sec-eyebrow" style="margin-bottom:20px;">Team Members</div>
+  <div class="team-row">
+    <div class="tm-card">
+      <div class="tm-av" style="background:linear-gradient(135deg,rgba(0,212,170,0.2),rgba(0,212,170,0.04));border:1px solid rgba(0,212,170,0.2);color:var(--teal);">M</div>
+      <div class="tm-name">Mumtaz</div>
+      <div class="tm-email">mumtazahmadma489@gmail.com</div>
     </div>
-
-    <!-- Team -->
-    <div class="section-label" style="margin-bottom:20px;">Team Members</div>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar">M</div>
-        <div class="team-name">Mumtaz</div>
-        <div class="team-email">mumtazahmadma489@gmail.com</div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">H</div>
-        <div class="team-name">Hassan</div>
-        <div class="team-email">hassan.training@octetsolutions.io</div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">B</div>
-        <div class="team-name">Bareera</div>
-        <div class="team-email">bareera@octetsolutions.io</div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">K</div>
-        <div class="team-name">Khushbakht Mumtaz</div>
-        <div class="team-email">khushbakht.training@octetsolutions.io</div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">A</div>
-        <div class="team-name">Ali Raza</div>
-        <div class="team-email">aliraza.training@octetsolutions.io</div>
-      </div>
+    <div class="tm-card">
+      <div class="tm-av" style="background:linear-gradient(135deg,rgba(100,181,246,0.2),rgba(100,181,246,0.04));border:1px solid rgba(100,181,246,0.2);color:var(--sky);">H</div>
+      <div class="tm-name">Hassan</div>
+      <div class="tm-email">hassan.training@octetsolutions.io</div>
     </div>
-
-    <!-- Responsibilities -->
-    <div class="section-label" style="margin-bottom:20px;">Key Responsibilities</div>
-    <div class="resp-grid">
-      <div class="resp-card">
-        <div class="resp-freq">Daily</div>
-        <div class="resp-title">Team & Task Supervision</div>
-        <ul class="resp-list">
-          <li>Coordinate team and train new hires</li>
-          <li>Enroll backend hires in e-learning</li>
-          <li>Oversee Modzee lesson updates</li>
-          <li>Monitor new categories & assign them</li>
-          <li>Conduct daily lesson reviews</li>
-        </ul>
-      </div>
-      <div class="resp-card">
-        <div class="resp-freq">Daily</div>
-        <div class="resp-title">Lesson Creation & Checking</div>
-        <ul class="resp-list">
-          <li>Create new training lessons</li>
-          <li>Update lessons based on new data & formats</li>
-          <li>Review each lesson for accuracy</li>
-          <li>Make required changes per instructions</li>
-        </ul>
-      </div>
-      <div class="resp-card">
-        <div class="resp-freq">Daily</div>
-        <div class="resp-title">Feedback & Approval Process</div>
-        <ul class="resp-list">
-          <li>Share lessons for manager review</li>
-          <li>Minimum 50% approval required</li>
-          <li>Submit all feedback via OneVision only</li>
-          <li>Close feedback within 24 hours</li>
-        </ul>
-      </div>
-      <div class="resp-card">
-        <div class="resp-freq">Daily</div>
-        <div class="resp-title">eNews & Policy Updates</div>
-        <ul class="resp-list">
-          <li>Check eNews daily for updates</li>
-          <li>Create lessons as soon as eNews is published</li>
-          <li>Assign lessons based on eNews or policy changes</li>
-          <li>Ensure equal task distribution</li>
-        </ul>
-      </div>
-      <div class="resp-card">
-        <div class="resp-freq">Daily</div>
-        <div class="resp-title">Video Quiz Monitoring</div>
-        <ul class="resp-list">
-          <li>Check quiz completions within 72 hours</li>
-          <li>Reassign failed lessons via ticket</li>
-          <li>Review reassignment requests</li>
-          <li>Add remarks where reassignment is needed</li>
-        </ul>
-      </div>
-      <div class="resp-card">
-        <div class="resp-freq">Daily</div>
-        <div class="resp-title">Reports & Meetings</div>
-        <ul class="resp-list">
-          <li>Maintain training department internal report</li>
-          <li>Review and submit 10-day reports</li>
-          <li>Conduct daily or as-needed team meetings</li>
-          <li>Close tickets daily</li>
-        </ul>
-      </div>
-      <div class="resp-card">
-        <div class="resp-freq">When Required</div>
-        <div class="resp-title">HR Coordination</div>
-        <ul class="resp-list">
-          <li>Trigger HR alerts after 3 failed lessons</li>
-          <li>Maintain employee lesson completion records</li>
-          <li>Escalate delayed data from other departments</li>
-        </ul>
-      </div>
-      <div class="resp-card">
-        <div class="resp-freq">Every 4 Months</div>
-        <div class="resp-title">Lesson Update Follow-up</div>
-        <ul class="resp-list">
-          <li>Follow up with frontend & backend coordinators</li>
-          <li>Revise lessons based on updated data</li>
-          <li>Prioritize updates by urgency level</li>
-        </ul>
-      </div>
-      <div class="resp-card">
-        <div class="resp-freq">Ongoing</div>
-        <div class="resp-title">Promotion Training Cycle</div>
-        <ul class="resp-list">
-          <li>Manage promotion training framework</li>
-          <li>Approve candidate eligibility & track assignment</li>
-          <li>Design lesson plans & training timelines</li>
-          <li>Identify performance gaps & assign retraining</li>
-        </ul>
-      </div>
+    <div class="tm-card">
+      <div class="tm-av" style="background:linear-gradient(135deg,rgba(255,107,107,0.2),rgba(255,107,107,0.04));border:1px solid rgba(255,107,107,0.2);color:var(--coral);">B</div>
+      <div class="tm-name">Bareera</div>
+      <div class="tm-email">bareera@octetsolutions.io</div>
     </div>
+    <div class="tm-card">
+      <div class="tm-av" style="background:linear-gradient(135deg,rgba(255,179,71,0.2),rgba(255,179,71,0.04));border:1px solid rgba(255,179,71,0.2);color:var(--amber);">K</div>
+      <div class="tm-name">Khushbakht Mumtaz</div>
+      <div class="tm-email">khushbakht.training@octetsolutions.io</div>
+    </div>
+    <div class="tm-card">
+      <div class="tm-av" style="background:linear-gradient(135deg,rgba(179,136,255,0.2),rgba(179,136,255,0.04));border:1px solid rgba(179,136,255,0.2);color:#b388ff;">A</div>
+      <div class="tm-name">Ali Raza</div>
+      <div class="tm-email">aliraza.training@octetsolutions.io</div>
+    </div>
+  </div>
 
+  <!-- Responsibilities -->
+  <div class="sec-eyebrow" style="margin-bottom:24px;">Key Responsibilities</div>
+  <div class="resp-grid">
+    <div class="resp-card" style="--rc-color:var(--sky);">
+      <div class="resp-tag daily">Daily</div>
+      <div class="resp-title">Team & Task Supervision</div>
+      <ul class="resp-list">
+        <li>Coordinate team and train new hires</li>
+        <li>Enroll backend hires in e-learning</li>
+        <li>Oversee Modzee lesson updates</li>
+        <li>Monitor new categories & assign them</li>
+        <li>Conduct daily lesson reviews</li>
+      </ul>
+    </div>
+    <div class="resp-card" style="--rc-color:var(--sky);">
+      <div class="resp-tag daily">Daily</div>
+      <div class="resp-title">Lesson Creation & Checking</div>
+      <ul class="resp-list">
+        <li>Create new training lessons</li>
+        <li>Update lessons per new data & formats</li>
+        <li>Review each lesson for accuracy</li>
+        <li>Make required changes per instructions</li>
+      </ul>
+    </div>
+    <div class="resp-card" style="--rc-color:var(--sky);">
+      <div class="resp-tag daily">Daily</div>
+      <div class="resp-title">Feedback & Approval Process</div>
+      <ul class="resp-list">
+        <li>Share lessons for manager review</li>
+        <li>Minimum 50% approval required</li>
+        <li>Submit all feedback via OneVision only</li>
+        <li>Close feedback within 24 hours</li>
+      </ul>
+    </div>
+    <div class="resp-card" style="--rc-color:var(--sky);">
+      <div class="resp-tag daily">Daily</div>
+      <div class="resp-title">eNews & Policy Updates</div>
+      <ul class="resp-list">
+        <li>Check eNews daily for updates</li>
+        <li>Create lessons as soon as eNews published</li>
+        <li>Assign lessons per policy changes</li>
+        <li>Ensure equal task distribution</li>
+      </ul>
+    </div>
+    <div class="resp-card" style="--rc-color:var(--sky);">
+      <div class="resp-tag daily">Daily</div>
+      <div class="resp-title">Video Quiz Monitoring</div>
+      <ul class="resp-list">
+        <li>Check quiz completions within 72 hours</li>
+        <li>Reassign failed lessons via ticket</li>
+        <li>Review reassignment requests</li>
+        <li>Add remarks where needed</li>
+      </ul>
+    </div>
+    <div class="resp-card" style="--rc-color:var(--sky);">
+      <div class="resp-tag daily">Daily</div>
+      <div class="resp-title">Reports & Meetings</div>
+      <ul class="resp-list">
+        <li>Maintain training internal report</li>
+        <li>Review and submit 10-day reports</li>
+        <li>Conduct daily team meetings</li>
+        <li>Close tickets daily</li>
+      </ul>
+    </div>
+    <div class="resp-card" style="--rc-color:var(--amber);">
+      <div class="resp-tag when">When Required</div>
+      <div class="resp-title">HR Coordination</div>
+      <ul class="resp-list">
+        <li>Trigger HR alerts after 3 failed lessons</li>
+        <li>Maintain employee lesson records</li>
+        <li>Escalate delayed data from departments</li>
+      </ul>
+    </div>
+    <div class="resp-card" style="--rc-color:var(--coral);">
+      <div class="resp-tag months">Every 4 Months</div>
+      <div class="resp-title">Lesson Update Follow-up</div>
+      <ul class="resp-list">
+        <li>Follow up with frontend & backend coordinators</li>
+        <li>Revise lessons based on updated data</li>
+        <li>Prioritize updates by urgency</li>
+      </ul>
+    </div>
+    <div class="resp-card" style="--rc-color:var(--teal);">
+      <div class="resp-tag ongoing">Ongoing</div>
+      <div class="resp-title">Promotion Training Cycle</div>
+      <ul class="resp-list">
+        <li>Manage promotion training framework</li>
+        <li>Approve candidate eligibility</li>
+        <li>Design lesson plans & timelines</li>
+        <li>Identify performance gaps & retraining</li>
+      </ul>
+    </div>
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ── -->
 <footer>
-  <span class="logo-text">Welcome.</span>
-  We're glad you're here — this page was created to help new team members understand our structure and departments.
-  <br><br>
-  For questions, reach out to the Training Department.
+  <span class="footer-logo">Octet Solutions</span>
+  <p class="footer-sub">
+    This page was created to help new team members understand our structure.<br>
+    Questions? Reach out to the Training Department.
+  </p>
 </footer>
 
 <script>
-  // Restaurants
-  const restaurants = [...new Set([
-    "Arthur","Harmony","Surrey West (Night)","Pond (Morning)","Keele","KB (FOH)",
-    "Collingwood","KB (BOH)","Abotsford Drivethru","Bridgeport","College St (Morning)",
-    "Yonge 1 (Morning)","Steeles","Yonge 1 (Night)","Abotsford","Lakehead",
-    "Westminster","Surrey West (Morning)","College St Night","Harmony (Night)",
-    "Queen (Night)","Pond (Night)","Queen (Morning)","RedRiver",
-    "Abbotsford High Street","College St (Night)","Ironwood","New Westminster",
-    "West (Morning)","Osmows Queen (Night)","Osmows College (Night)",
-    "Surrey (Night)","Osmows Pond (Night)","Yonge 1 (Night)","Westminster Night"
-  ])].sort();
+// Floating dots
+const dotsEl = document.getElementById('dots');
+for(let i=0;i<25;i++){
+  const d=document.createElement('div');
+  d.className='dot';
+  d.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${8+Math.random()*14}s;--delay:${Math.random()*10}s;`;
+  dotsEl.appendChild(d);
+}
 
-  const grid = document.getElementById('restoGrid');
-  restaurants.forEach(r => {
-    const tag = document.createElement('div');
-    tag.className = 'resto-tag';
-    tag.textContent = r;
-    grid.appendChild(tag);
+// Restaurants
+const restaurants=[...new Set([
+  "Arthur","Harmony","Surrey West (Night)","Pond (Morning)","Keele","KB (FOH)",
+  "Collingwood","KB (BOH)","Abotsford Drivethru","Bridgeport","College St (Morning)",
+  "Yonge 1 (Morning)","Steeles","Yonge 1 (Night)","Abotsford","Lakehead",
+  "Westminster","Surrey West (Morning)","College St (Night)","Harmony (Night)",
+  "Queen (Night)","Pond (Night)","Queen (Morning)","RedRiver",
+  "Abbotsford High Street","College St (Night)","Ironwood","New Westminster",
+  "West (Morning)","Osmows Queen (Night)","Osmows College (Night)",
+  "Surrey (Night)","Osmows Pond (Night)","Westminster Night"
+])].sort();
+
+document.getElementById('restoNum').textContent=restaurants.length+'+';
+const g=document.getElementById('restoGrid');
+restaurants.forEach(r=>{
+  const t=document.createElement('div');
+  t.className='resto-chip';t.textContent=r;g.appendChild(t);
+});
+
+// Mouse glow on dept cards
+document.querySelectorAll('.dept-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
   });
+});
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, entry.target.dataset.delay || 0);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  // Dept cards stagger
-  document.querySelectorAll('.dept-card').forEach((card, i) => {
-    card.dataset.delay = i * 60;
-    observer.observe(card);
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('vis'),e.target.dataset.d||0);
+      obs.unobserve(e.target);
+    }
   });
+},{threshold:0.08});
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.dept-card').forEach((c,i)=>{c.dataset.d=i*55;obs.observe(c);});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
