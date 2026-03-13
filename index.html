@@ -752,7 +752,8 @@ footer{
       <p class="card-desc">Two sub-departments: Heating & Cooling (HVAC, fridges, etc.) and General Maintenance (grease trap, fire system, grill, lights, etc.).</p>
     </div>
 
-    <div class="dept-card" style="border-color:rgba(0,212,170,0.3);">
+    <!-- ✅ TRAINING CARD — click karo to scroll + highlight -->
+    <div class="dept-card" id="trainingCard" style="border-color:rgba(0,212,170,0.3); cursor:pointer;">
       <div class="card-top">
         <span class="card-emoji">🎓</span>
         <span class="card-badge" style="--badge-bg:rgba(0,212,170,0.12);--badge-color:#00d4aa;--badge-border:rgba(0,212,170,0.25);">Learning</span>
@@ -1047,6 +1048,17 @@ const obs=new IntersectionObserver(entries=>{
 
 document.querySelectorAll('.dept-card').forEach((c,i)=>{c.dataset.d=i*55;obs.observe(c);});
 document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+
+// ✅ Training card click — scroll + glow highlight
+document.getElementById('trainingCard').addEventListener('click', () => {
+  const target = document.getElementById('training');
+  target.scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    target.style.transition = 'box-shadow 0.4s ease';
+    target.style.boxShadow = '0 0 0 3px rgba(0,212,170,0.6), 0 0 60px rgba(0,212,170,0.2)';
+    setTimeout(() => { target.style.boxShadow = ''; }, 2000);
+  }, 700);
+});
 </script>
 </body>
 </html>
